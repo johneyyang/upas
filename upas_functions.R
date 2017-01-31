@@ -14,10 +14,16 @@
     units <- read_csv(file, col_names = as.character(col_names[1,]),
     									    n_max = 1, skip = 3, col_types = NULL)
     data <- read_csv(file, col_names = TRUE, skip = 4)
- # parse header info to main data file
+ # parse file name
+    data <- dplyr::mutate(data, sample = strsplit(basename(file), "_")[[1]][6])
     
+ # parse header info to main data file
+    data <- dplyr::mutate(data, start = as.POSIXct(as.character(sample_info$StartTime[1]),
+                                                 format = "%y%m%d%H%M%S"),
+    											      end = as.POSIXct(as.character(sample_info$EndTime[1]),
+                                                 format = "%y%m%d%H%M%S"))
  # convert data classes
- 
+    data <- dplyr::mutate(data, datetime = as.POSIXct(as.character(timestr), format = "%y%m%d%H%M%S"))
  # rename columns
  
  # return
@@ -28,6 +34,7 @@
 #______________________________________________________________________________________
 # Load multifile folders
 # out <- load_multifile("data/log", "*")
+# saveRDS(data, "upas_india.rds")
 load_multifile <- function(fldr, pattern){
  # list files to load
   filelist <- list.files(fldr, pattern = pattern, full.names = TRUE, ignore.case = TRUE)
