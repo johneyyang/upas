@@ -1,0 +1,47 @@
+---
+title: "upas india"
+author: "Nicholas Good"
+date: "1/30/2017"
+output: html_document
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
+  library(tidyverse)
+  library(ggmap)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
+  source("upas_functions.R")
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
+  source("upas_functions.R")
+```
+
+# Load upas data
+
+* Load data
+* Save to file
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
+  upas <- load_multifile("data/log", "*")
+	saveRDS(data, "upas_india.rds")
+```
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
+  head(upas, 2)
+```
+
+# Clean data
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
+
+```
+
+# Plot data
+
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE, fig.width=12, fig.height=8}
+  map <- qmap('Bangalore', zoom = 12) 
+  map + geom_path(aes(y = gpslatitude, x = gpslongitude, colour = sample, size = "1"), data = upas)
+```
