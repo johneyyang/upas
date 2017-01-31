@@ -78,3 +78,20 @@ output: html_document
 	  geom_point() +
   	theme_minimal()
 ```
+
+* Delta p
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=TRUE, fig.width=12, fig.height=8}
+  ggplot(upas, aes(x= datetime, y = dpSDPu25, group = sample, colour = sample)) +
+	  geom_point() +
+  	theme_minimal()
+```
+
+* battery voltage
+
+```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=TRUE, fig.width=12, fig.height=8}
+  ggplot(upas, aes(x= datetime, y = bVolt, group = sample, colour = sample)) +
+	  geom_point() +
+  	theme_minimal()
+```
+
