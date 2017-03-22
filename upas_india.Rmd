@@ -12,10 +12,6 @@ output: html_document
   source("upas_functions.R")
 ```
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, results='markup', cache=TRUE}
-  source("upas_functions.R")
-```
-
 # Load upas data
 
 * Load data
