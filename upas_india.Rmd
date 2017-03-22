@@ -1,7 +1,5 @@
 ---
 title: "upas india"
-author: "Nicholas Good"
-date: "1/30/2017"
 output: html_document
 ---
 
