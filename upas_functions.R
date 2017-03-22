@@ -5,7 +5,7 @@
 # read one upas file
 # file <- "data/log/PS108LOG_170116_123618_000000_000000_BLR02___________HHH.txt"
   load_upas_file <- function(file){
-    ware_info <- read_csv(file, col_names = "versions",
+    software_info <- read_csv(file, col_names = "versions",
     											n_max = 1, col_types = NULL)
     sample_info <- read_csv(file, col_names = TRUE,
     											n_max = 1, skip = 1, col_types = NULL)
