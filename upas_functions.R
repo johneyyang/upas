@@ -23,9 +23,10 @@
   data <- dplyr::mutate(data, start = as.POSIXct(as.character(sample_info$StartTime[1]),
                                                  format = "%y%m%d%H%M%S"),
                               end = as.POSIXct(as.character(sample_info$EndTime[1]),
-                                                 format = "%y%m%d%H%M%S"))
+                                               format = "%y%m%d%H%M%S"))
  # convert data classes
-  data <- dplyr::mutate(data, datetime = as.POSIXct(as.character(timestr), format = "%y%m%d%H%M%S"))
+  data <- dplyr::mutate(data, datetime = as.POSIXct(as.character(timestr),
+                                                    format = "%y%m%d%H%M%S"))
  # rename columns
   data <- dplyr::rename(data, flow = volflow,
                               vol = sampledVol,
@@ -58,7 +59,9 @@ load_multifile <- function(fldr, pattern){
 
  # loop files
   for(i in 1:length(filelist)){
-    ifelse(i==1, out <- load_upas_file(filelist[i]), out <- rbind(out, load_upas_file(filelist[i])))
+    ifelse(i==1,
+           out <- load_upas_file(filelist[i]),
+           out <- rbind(out, load_upas_file(filelist[i])))
   }
 
  # return
