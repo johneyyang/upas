@@ -1,7 +1,9 @@
+#_______________________________________________________________________________
 ## Libraries
   library(tidyverse)
+#_______________________________________________________________________________
 
-#______________________________________________________________________________________
+#_______________________________________________________________________________
 # read one upas file
 # file <- "data/log/PS108LOG_170116_123618_000000_000000_BLR02___________HHH.txt"
   load_upas_file <- function(file){
@@ -10,7 +12,7 @@
     sample_info <- read_csv(file, col_names = TRUE,
                             n_max = 1, skip = 1, col_types = NULL)
     col_names <- read_csv(file, col_names = FALSE,
-                          n_max = 1, skip = 4, col_types = NULL)	
+                          n_max = 1, skip = 4, col_types = NULL)
     units <- read_csv(file, col_names = as.character(col_names[1,]),
                       n_max = 1, skip = 3, col_types = NULL)
     data <- read_csv(file, col_names = TRUE, skip = 4)
@@ -20,12 +22,27 @@
  # parse header info to main data file
   data <- dplyr::mutate(data, start = as.POSIXct(as.character(sample_info$StartTime[1]),
                                                  format = "%y%m%d%H%M%S"),
-                          end = as.POSIXct(as.character(sample_info$EndTime[1]),
+                              end = as.POSIXct(as.character(sample_info$EndTime[1]),
                                                  format = "%y%m%d%H%M%S"))
  # convert data classes
   data <- dplyr::mutate(data, datetime = as.POSIXct(as.character(timestr), format = "%y%m%d%H%M%S"))
  # rename columns
- 
+  data <- dplyr::rename(data, flow = volflow,
+                              vol = sampledVol,
+                              t_oc = bme_temp,
+                              p_kpa = bme_press,
+                              rh_pct = bme_rh,
+                              den = atmoRho,
+                              dp = dpSDPu25,
+                              t_oc_sd = tempSDPu25,
+                              bat_v = bVolt,
+                              bat_fuel = bFuel,
+                              gps_lat = gpslatitude,
+                              gps_lon = gpslongitude,
+                              gps_date = gpsUTCDate,
+                              gps_time = gpsUTCTime,
+                              gps_sat = gpssatellites,
+                              gps_alt = gpsaltitude)
  # return
   return(data)
 }
