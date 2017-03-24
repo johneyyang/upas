@@ -30,6 +30,7 @@ output: html_document
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=TRUE}
    upas <- dplyr::filter(upas, sample != "BLR01 ")
+   upas <- gps_clean(upas)
 ```
 
 # Plot data
@@ -37,8 +38,13 @@ output: html_document
 * Map
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=TRUE, fig.width=12, fig.height=8}
-  map <- qmap('Bangalore', zoom = 12) 
-  map + geom_path(aes(y = gpslatitude, x = gpslongitude, colour = sample, size = "1"), data = upas)
+  box <- make_bbox(gps_lon, gps_lat, upas)
+
+  map <- qmap(c(lon = mean(upas$gps_lon, na.rm = TRUE),
+                lat = mean(upas$gps_lat, na.rm = TRUE)),
+                zoom = calc_zoom(box) -2)
+
+  map + geom_path(aes(y = gps_lat, x = gps_lon, colour = sample, size = "1"), data = upas)
 ```
 
 * Flow
