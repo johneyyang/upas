@@ -46,9 +46,9 @@
  # return
   return(data)
 }
-#______________________________________________________________________________________
+#_______________________________________________________________________________
 
-#______________________________________________________________________________________
+#_______________________________________________________________________________
 # Load multifile folders
 # out <- load_multifile("data/log", "*")
 # saveRDS(data, "upas_india.rds")
@@ -58,11 +58,10 @@ load_multifile <- function(fldr, pattern){
 
  # loop files
   for(i in 1:length(filelist)){
-  	ifelse(i==1, out <- load_upas_file(filelist[i]), out <- rbind(out, load_upas_file(filelist[i])))
+    ifelse(i==1, out <- load_upas_file(filelist[i]), out <- rbind(out, load_upas_file(filelist[i])))
   }
 
  # return
   return(out)
 }
-#______________________________________________________________________________________
-
+#_______________________________________________________________________________
