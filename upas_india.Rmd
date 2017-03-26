@@ -6,6 +6,7 @@ output: html_document
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
   library(tidyverse)
   library(ggmap)
+  library(leaflet)
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
@@ -19,7 +20,7 @@ output: html_document
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
   upas <- load_multifile("data/log", "*")
-	saveRDS(data, "upas_india.rds")
+  saveRDS(data, "upas_india.rds")
 ```
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE}
@@ -40,11 +41,14 @@ output: html_document
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, results='markup', cache=FALSE, fig.width=12, fig.height=8}
   box <- make_bbox(gps_lon, gps_lat, upas)
 
-  map <- qmap(c(lon = mean(upas$gps_lon, na.rm = TRUE),
-                lat = mean(upas$gps_lat, na.rm = TRUE)),
-                zoom = calc_zoom(box) -2)
+  #map <- qmap(c(lon = mean(upas$gps_lon, na.rm = TRUE),
+  #              lat = mean(upas$gps_lat, na.rm = TRUE)),
+  #              zoom = calc_zoom(box) -2)
+  
+  map <- leaflet() %>% setView(lng = mean(upas$gps_lon, na.rm = TRUE), lat = mean(upas$gps_lat, na.rm = TRUE), zoom = 12)
+  map %>% addTiles()
 
-  map + geom_path(aes(y = gps_lat, x = gps_lon, colour = sample, size = "1"), data = upas)
+  #map + geom_path(aes(y = gps_lat, x = gps_lon, colour = sample, size = "1"), data = upas)
 ```
 
 * Flow
