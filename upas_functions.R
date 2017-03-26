@@ -39,8 +39,8 @@
                               t_oc_sd = tempSDPu25,
                               bat_v = bVolt,
                               bat_fuel = bFuel,
-                              gps_lat = gpslatitude,
-                              gps_lon = gpslongitude,
+                              lat = gpslatitude,
+                              lng = gpslongitude,
                               gps_date = gpsUTCDate,
                               gps_time = gpsUTCTime,
                               gps_sat = gpssatellites,
@@ -74,8 +74,8 @@ load_multifile <- function(fldr, pattern){
 #_______________________________________________________________________________
 # Clean gps
 upas_gps <- function(df){
-  out <- dplyr::mutate(df, gps_lat = replace(gps_lat, gps_sat < 3, NA)) %>%
-         dplyr::mutate(gps_lon = replace(gps_lon, gps_sat < 3, NA)) %>%
+  out <- dplyr::mutate(df, lat = replace(lat, gps_sat < 3, NA)) %>%
+         dplyr::mutate(lng = replace(lng, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_alt = replace(gps_alt, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_date = replace(gps_date, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_time = replace(gps_time, gps_sat < 3, NA))
@@ -260,5 +260,22 @@ plot_op <- function(df, id_inst){
                                      layout.pos.col = matchidx$col))
     }
    }
+  }
+#_______________________________________________________________________________
+  
+#_______________________________________________________________________________
+# map gps data
+  upas_map <- function(df, id_list = "", var = ""){
+   # clean
+    df <- dplyr::filter(df, !is.na(lat))
+   # color pallete
+    color <- colorFactor(rainbow(length(unique(upas$id))), df$id)
+  # plot
+    leaflet(df) %>%
+    addProviderTiles(providers$Stamen.TonerLite,
+                    options = providerTileOptions(noWrap = TRUE)) %>%
+    addCircleMarkers(radius = 5,
+                     color=~color(id),
+                     stroke = FALSE, fillOpacity = 0.5)
   }
 #_______________________________________________________________________________
