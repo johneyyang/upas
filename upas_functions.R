@@ -43,7 +43,8 @@
                               gps_date = gpsUTCDate,
                               gps_time = gpsUTCTime,
                               gps_sat = gpssatellites,
-                              gps_alt = gpsaltitude)
+                              gps_alt = gpsaltitude,
+                              id = sample)
  # return
   return(data)
 }
@@ -84,6 +85,7 @@ upas_gps <- function(df){
 
 #_______________________________________________________________________________
 # Process upas
+# upas <- upas_process(upas)
 upas_process <- function(df){
   out <- upas_gps(df)
  # return
@@ -91,3 +93,29 @@ upas_process <- function(df){
 }
 #_______________________________________________________________________________
 
+#_______________________________________________________________________________
+# Plot PM
+# plot_pm(upas, "BLR02")
+plot_pm <- function(df, id_inst){
+ # filter
+  out <- dplyr::filter(df, id == id_inst)
+ # plot
+  p <- ggplot(out, aes(x = datetime, y = dp)) +
+       geom_point() +
+       theme_minimal() +
+       xlab("") +
+       ylab("Pressure drop (Pa)")
+  return(p)
+}
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# round down order of magnitude
+  round_down <- function(x) suppressWarnings(ifelse(is.na(10^floor(log10(x))),
+                                   x,
+                                   10^floor(log10(x))))
+# round down order of magnitude
+  round_up <- function(x) suppressWarnings(ifelse(is.na(10^ceiling(log10(x))),
+                                   x,
+                                   10^ceiling(log10(x))))
+#_______________________________________________________________________________
