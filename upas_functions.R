@@ -71,13 +71,22 @@ load_multifile <- function(fldr, pattern){
 
 #_______________________________________________________________________________
 # Clean gps
-gps_clean <- function(df){
+upas_gps <- function(df){
   out <- dplyr::mutate(df, gps_lat = replace(gps_lat, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_lon = replace(gps_lon, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_alt = replace(gps_alt, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_date = replace(gps_date, gps_sat < 3, NA)) %>%
          dplyr::mutate(gps_time = replace(gps_time, gps_sat < 3, NA))
   # return
+  return(out)
+}
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# Process upas
+upas_process <- function(df){
+  out <- upas_gps(df)
+ # return
   return(out)
 }
 #_______________________________________________________________________________
