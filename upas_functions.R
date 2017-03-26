@@ -1,6 +1,7 @@
 #_______________________________________________________________________________
 ## Libraries
   library(tidyverse)
+  library(scales)
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
@@ -104,7 +105,50 @@ plot_pm <- function(df, id_inst){
        geom_point() +
        theme_minimal() +
        xlab("") +
-       ylab("Pressure drop (Pa)")
+       ylab("Pressure drop (Pa)") +
+       ylim(0, round_up(max(out$dp, na.rm = TRUE)))
+ # return
+  return(p)
+}
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# Plot met
+# plot_met(upas, "BLR02")
+plot_met <- function(df, id_inst){
+ # filter
+  out <- dplyr::filter(df, id == id_inst) %>%
+         dplyr::select(t_oc, rh_pct, p_kpa, datetime) 
+ # plot t
+  p_t <- ggplot(out, aes(x = datetime, y = t_oc)) +
+         geom_point(color = "indianred3") +
+         theme_minimal() +
+         xlab("") +
+         ylab("Temperature (oC)") +
+         ylim(0, round_up(max(out$t_oc, na.rm = TRUE))) +
+         theme(legend.position = "hide")
+  # plot rh
+  p_rh <- ggplot(out, aes(x = datetime, y = rh_pct)) +
+          geom_point(color = "lightskyblue3") +
+          theme_minimal() +
+          xlab("") +
+          ylab("Relative humidity (%)") +
+          ylim(0, round_up(max(out$rh_pct, na.rm = TRUE))) +
+          theme(legend.position = "hide")
+
+  # plot p
+  p_p <- ggplot(out, aes(x = datetime, y = p_kpa)) +
+         geom_point(color = "mediumpurple2") +
+         theme_minimal() +
+         xlab("") +
+         ylab("Atmospheric pressure (kPa)") +
+         ylim(round(min(out$p_kpa, na.rm = TRUE) -50, -2),
+              round(max(out$p_kpa, na.rm = TRUE) + 50, -2)) +
+         theme(legend.position = "hide")
+  # combine
+  p <- multiplot(p_t, p_rh, p_p, cols = 1)
+
+ # return
   return(p)
 }
 #_______________________________________________________________________________
@@ -118,4 +162,52 @@ plot_pm <- function(df, id_inst){
   round_up <- function(x) suppressWarnings(ifelse(is.na(10^ceiling(log10(x))),
                                    x,
                                    10^ceiling(log10(x))))
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# Multiple plot function from R cookbook
+  #
+  # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
+  # - cols:   Number of columns in layout
+  # - layout: A matrix specifying the layout. If present, 'cols' is ignored.
+  #
+  # If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+  # then plot 1 will go in the upper left, 2 will go in the upper right, and
+  # 3 will go all the way across the bottom.
+  #
+  multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+   library(grid)
+   
+   # Make a list from the ... arguments and plotlist
+   plots <- c(list(...), plotlist)
+   
+   numPlots = length(plots)
+   
+   # If layout is NULL, then use 'cols' to determine layout
+   if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+   }
+   
+   if (numPlots==1) {
+    print(plots[[1]])
+    
+   } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+     # Get the i,j matrix positions of the regions that contain this subplot
+     matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+     
+     print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                     layout.pos.col = matchidx$col))
+    }
+   }
+  }
 #_______________________________________________________________________________
