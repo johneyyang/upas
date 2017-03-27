@@ -3,7 +3,7 @@ library(leaflet)
 
 r_colors <- rgb(t(col2rgb(colors()) / 255))
 names(r_colors) <- colors()
-id_list <- unique(upas$id)
+id_list <- c("all", unique(upas$id))
 
 ui <- fluidPage(
  fluidRow(
@@ -25,9 +25,9 @@ ui <- fluidPage(
                          selectInput("select_id", label = "", 
                                      choices = id_list, 
                                      selected = 1)
-                    )
-                  )
-                         ),
+                         )
+                         )
+                       ),
                 tabPanel("info", "hbhj")
     )
   )
