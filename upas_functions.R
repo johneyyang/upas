@@ -157,50 +157,52 @@ plot_met <- function(df, id_inst){
 # Plot operation
 # plot_op(upas, "BLR02")
 plot_op <- function(df, id_inst){
- # filter
- out <- dplyr::filter(df, id == id_inst) %>%
-  dplyr::select(flow, vol, bat_v, bat_fuel, datetime) 
- # plot flow
- p_flow <- ggplot(out, aes(x = datetime, y = flow)) +
-  geom_point(color = "indianred3") +
-  theme_minimal() +
-  xlab("") +
-  ylab("Flow (Liters/min)") +
-  ylim(floor(min(out$flow)),
-       ceiling(max(out$flow))) +
-  theme(legend.position = "hide")
- # plot sampled volume
- p_vol <- ggplot(out, aes(x = datetime, y = vol)) +
-  geom_point(color = "wheat3") +
-  theme_minimal() +
-  xlab("") +
-  ylab("Sampled volume (Liters)") +
-  ylim(0, round_up(max(out$vol, na.rm = TRUE))) +
-  theme(legend.position = "hide")
- 
- # plot battery voltage
- p_batv <- ggplot(out, aes(x = datetime, y = bat_v)) +
-  geom_point(color = "palegreen4") +
-  theme_minimal() +
-  xlab("") +
-  ylab("Battery status (V)") +
-  ylim(round(min(out$bat_v, na.rm = TRUE) -50, -2),
-       round(max(out$bat_v, na.rm = TRUE) + 50, -2)) +
-  theme(legend.position = "hide")
- # plot battery fuel
- p_batf <- ggplot(out, aes(x = datetime, y = bat_fuel)) +
-  geom_point(color = "lightsteelblue4") +
-  theme_minimal() +
-  xlab("") +
-  ylab("Battery fuel level (?)") +
-  ylim(round(min(out$bat_fuel, na.rm = TRUE) -50, -2),
-       round(max(out$bat_fuel, na.rm = TRUE) + 50, -2)) +
-  theme(legend.position = "hide")
- # combine
- p <- multiplot(p_flow, p_vol, p_batv, p_batf, cols = 1)
- 
+
+  if(id_inst != "all"){
+    # filter
+      out <- dplyr::filter(df, id == id_inst) %>%
+             dplyr::select(flow, vol, bat_v, bat_fuel, datetime) 
+    # plot flow
+      p_flow <- ggplot(out, aes(x = datetime, y = flow)) +
+                geom_point(color = "indianred3") +
+                theme_minimal() +
+      xlab("") +
+      ylab("Flow (Liters/min)") +
+      ylim(floor(min(out$flow)),
+      ceiling(max(out$flow))) +
+      theme(legend.position = "hide")
+    # plot sampled volume
+       p_vol <- ggplot(out, aes(x = datetime, y = vol)) +
+                geom_point(color = "wheat3") +
+                theme_minimal() +
+                xlab("") +
+                ylab("Sampled volume (Liters)") +
+                ylim(0, round_up(max(out$vol, na.rm = TRUE))) +
+                theme(legend.position = "hide")
+    # plot battery voltage
+       p_batv <- ggplot(out, aes(x = datetime, y = bat_v)) +
+                 geom_point(color = "palegreen4") +
+                 theme_minimal() +
+                 xlab("") +
+                 ylab("Battery status (V)") +
+                 ylim(round(min(out$bat_v, na.rm = TRUE) -50, -2),
+                 round(max(out$bat_v, na.rm = TRUE) + 50, -2)) +
+                 theme(legend.position = "hide")
+    # plot battery fuel
+      p_batf <- ggplot(out, aes(x = datetime, y = bat_fuel)) +
+                geom_point(color = "lightsteelblue4") +
+                theme_minimal() +
+                xlab("") +
+                ylab("Battery fuel level (?)") +
+                ylim(round(min(out$bat_fuel, na.rm = TRUE) -50, -2),
+                round(max(out$bat_fuel, na.rm = TRUE) + 50, -2)) +
+                theme(legend.position = "hide")
+    # combine
+       p <- multiplot(p_flow, p_vol, p_batv, p_batf, cols = 1)
+  }
+
  # return
- return(p)
+  return(p)
 }
 #_______________________________________________________________________________
 
