@@ -25,11 +25,7 @@ server <- function(input, output, session){
 }, ignoreNULL = FALSE)
 
   output$upasmap <- renderLeaflet({
-    leaflet() %>%
-    addProviderTiles(providers$Stamen.TonerLite,
-                     options = providerTileOptions(noWrap = TRUE)
-  ) %>%
-    addMarkers(data = points())
+   upas_map(upas)
   })
 }
 
