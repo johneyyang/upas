@@ -8,13 +8,18 @@ ui <- fluidPage(
  fluidRow(
   column(2, p(), "UPAS test app", p()
   ),
-  column(2, offset = 2, p(), "load button here", p()
+  column(2, offset = 2, p(), actionButton("recalc", "load data"), p()
   )      
  ),
   fluidRow(
-    leafletOutput("upasmap"),
-    p(),
-    actionButton("recalc", "New points")
+    tabsetPanel(type = "tabs", 
+                tabPanel("map", 
+                        leafletOutput("upasmap", height = 900),
+                        p()),
+                        
+                tabPanel("instrument", "hjvgv"), 
+                tabPanel("info", "hbhj")
+    )
   )
 )
 
@@ -25,7 +30,7 @@ server <- function(input, output, session){
 }, ignoreNULL = FALSE)
 
   output$upasmap <- renderLeaflet({
-   upas_map(upas)
+    upas_map(upas)
   })
 }
 
