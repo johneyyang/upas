@@ -3,6 +3,7 @@ library(leaflet)
 
 r_colors <- rgb(t(col2rgb(colors()) / 255))
 names(r_colors) <- colors()
+id_list <- unique(upas$id)
 
 ui <- fluidPage(
  fluidRow(
@@ -15,9 +16,18 @@ ui <- fluidPage(
     tabsetPanel(type = "tabs", 
                 tabPanel("map", 
                         leafletOutput("upasmap", height = 900),
-                        p()),
-                        
-                tabPanel("instrument", "hjvgv"), 
+                        p()
+                        ),
+                tabPanel("instrument",
+                  fluidRow(
+                    column(1),
+                    column(2, offset = 1,
+                         selectInput("select_id", label = "", 
+                                     choices = id_list, 
+                                     selected = 1)
+                    )
+                  )
+                         ),
                 tabPanel("info", "hbhj")
     )
   )
@@ -28,10 +38,12 @@ server <- function(input, output, session){
   points <- eventReactive(input$recalc, {
   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
 }, ignoreNULL = FALSE)
-
+ # map
   output$upasmap <- renderLeaflet({
     upas_map(upas)
   })
+ # selected instrument id
+  output$id_value <- renderPrint({ input$select_id })
 }
 
 shinyApp(ui, server)
