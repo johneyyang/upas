@@ -6,6 +6,7 @@ names(r_colors) <- colors()
 id_list <- c("all", unique(upas$id))
 
 ui <- fluidPage(
+  
  fluidRow(
   column(2, p(), "UPAS test app", p()
   ),
@@ -18,32 +19,71 @@ ui <- fluidPage(
                         leafletOutput("upasmap", height = 900),
                         p()
                         ),
-                tabPanel("instrument",
+                tabPanel("met",
                   fluidRow(
                     column(1),
                     column(2, offset = 1,
-                         selectInput("select_id", label = "", 
+                         selectInput("select_met_id", label = "", 
                                      choices = id_list, 
-                                     selected = 1)
-                         )
-                         )
+                                     selected = 1))),
+                  fluidRow(plotOutput("plot_met"))
                        ),
-                tabPanel("info", "hbhj")
+                tabPanel("op",
+                         fluidRow(
+                          column(1),
+                          column(2, offset = 1,
+                                 selectInput("select_op_id", label = "", 
+                                             choices = id_list, 
+                                             selected = 1))),
+                   fluidRow(plotOutput("plot_op"))
+                         )
     )
   )
 )
 
 server <- function(input, output, session){
-
-  points <- eventReactive(input$recalc, {
-  cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
-}, ignoreNULL = FALSE)
- # map
+ # load test data
+ upas <- load_multifile("data", "*")
+ # clean test data
+ upas <- upas_process(upas)
+ # id_list
+ id_list <- unique(upas$id)
+ 
+#________________________________________________________
+# map
   output$upasmap <- renderLeaflet({
     upas_map(upas)
   })
- # selected instrument id
-  output$id_value <- renderPrint({ input$select_id })
-}
+#________________________________________________________
 
+#________________________________________________________
+# met data to plot
+  met_data <- reactive({
+    data_met(upas, input$select_met_id)
+  })
+#________________________________________________________
+
+#________________________________________________________
+# op data to plot
+  op_data <- reactive({
+    data_op(upas, input$select_op_id)
+  })
+#________________________________________________________
+
+#________________________________________________________
+ # plot met
+  output$plot_met <- renderPlot({
+    print(plot_met(met_data()))
+  })
+#________________________________________________________
+
+#________________________________________________________
+# plot op
+  output$plot_op <- renderPlot({
+     print(plot_op(op_data()))
+})
+#________________________________________________________
+
+}
+#________________________________________________________
 shinyApp(ui, server)
