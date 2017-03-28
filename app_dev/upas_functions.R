@@ -56,7 +56,7 @@ load_upas_file <- function(file, filename){
 #_______________________________________________________________________________
 # Load multifile folders
 # out <- load_multifile("data/log", "*")
-# saveRDS(data, "upas_india.rds")
+# saveRDS(out, "upas_india.rds")
 load_multifile <- function(files, names){
 
  # loop files
@@ -65,7 +65,6 @@ load_multifile <- function(files, names){
          out <- load_upas_file(files[[i]], names[[i]]),
          out <- rbind(out, load_upas_file(files[[i]], names[[i]])))
  }
- 
  # return
  return(out)
 }
@@ -400,5 +399,19 @@ data_pm <- function(df){
   dplyr::select(df, dp, id, datetime)
  # return
  return(out)
+}
+#_______________________________________________________________________________
+
+plot_hist_dp <- function(df){
+ # plot
+ p <- ggplot(out, aes(x = dp, fill = id)) +
+  geom_histogram(binwidth = 0.5) +
+  theme_minimal() +
+  xlab("dp (kPa)") +
+  ylab("frequency") +
+  theme(text = element_text(size = 22), legend.position="none") +
+  theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
+ # return
+ return(p)
 }
 #_______________________________________________________________________________
