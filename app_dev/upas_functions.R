@@ -300,8 +300,19 @@ upas_map <- function(df, col, id_list = ""){
                             color=~color(id),
                             stroke = FALSE, fillOpacity = 0.5) %>%
            addLegend(pal = color, values = ~id,
-                     opacity = 1, title = "UPAS ID")}
-
+                     opacity = 1, title = "UPAS ID")
+ }
+ # color by t
+ if(col == "t"){
+  # color pallete
+  color <- colorFactor(rainbow(length(unique(df$id))), df$id)
+  # update map object
+  map <- addCircleMarkers(map, radius = 5,
+                          color=~color(id),
+                          stroke = FALSE, fillOpacity = 0.5) %>%
+   addLegend(pal = color, values = ~id,
+             opacity = 1, title = "UPAS ID")
+ }
  return(map)
 }
 #_______________________________________________________________________________
