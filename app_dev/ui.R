@@ -62,16 +62,34 @@ fluidPage(
     ),
   tabPanel("pm",
     fluidRow(
-    column(1)
+    column(1, p())
     #column(2, offset = 1,
     #selectInput("select_id_pm", label = "", 
     #choices = "id_list", 
     #selected = 1))
     ),
     fluidRow(plotlyOutput("plot_pm", height = "700px"))
-    )
-    )
-   )
+    ),
+    tabPanel("summary",
+      fluidRow(
+        column(1, p())
+      ),
+      fluidRow(plotlyOutput("plot_hist_dp", height = "400px", width = "50%"))
+    ),
+    tabPanel("about",
+             fluidRow(
+              column(width = 12,
+                     align="left",
+                     tags$footer(includeText("text/about.txt"),
+                                 style = "padding: 10px;"))),
+             fluidRow(
+              column(width = 12,
+                     align="left",
+                     tags$footer(includeText("text/about_2.txt"),
+                                 style = "padding: 10px;")))
+  )
+  )
+  )
   )
 #_______________________________________________________________________________
 # close ui
