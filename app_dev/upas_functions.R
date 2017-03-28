@@ -108,7 +108,7 @@ plot_pm <- function(df){
       ylim(0, round_up(max(df$dp, na.rm = TRUE))) +
       theme(text = element_text(size = 22)) +
       scale_fill_brewer() +
-      theme(legend.title=element_blank())
+      theme(legend.position = "none")
  # return
  return(p)
 }
