@@ -85,7 +85,7 @@ function(input, output){
 #_______________________________________________________________________________
 # map
   output$upasmap <- renderLeaflet({
-   upas_map(datasetInput())
+   upas_map(datasetInput(), input$map_color)
   })
 #_______________________________________________________________________________
 
