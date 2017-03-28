@@ -305,15 +305,44 @@ upas_map <- function(df, col, id_list = ""){
  # color by t
  if(col == "t"){
   # color pallete
-  color <- colorFactor(rainbow(length(unique(df$id))), df$id)
+  pal <- colorNumeric(palette = c("blue", "red"), domain = df$t_oc)
   # update map object
   map <- addCircleMarkers(map, radius = 5,
-                          color=~color(id),
+                          color= ~pal(t_oc),
                           stroke = FALSE, fillOpacity = 0.5) %>%
-   addLegend(pal = color, values = ~id,
-             opacity = 1, title = "UPAS ID")
+   addLegend(pal = pal,
+             values = ~t_oc,
+             opacity = 1,
+             title = "T (oC)")
  }
- return(map)
+# color by rh
+ if(col == "rh"){
+  # color pallete
+  pal <- colorNumeric(palette = c("red", "blue"), domain = df$rh_pct)
+  # update map object
+  map <- addCircleMarkers(map, radius = 5,
+                          color= ~pal(rh_pct),
+                          stroke = FALSE, fillOpacity = 0.5) %>%
+   addLegend(pal = pal,
+             values = ~rh_pct,
+             opacity = 1,
+             title = "RH (%)")
+ }
+ # color by dp
+ if(col == "dp"){
+  # color pallete
+  pal <- colorNumeric(palette = "YlGnBu", domain = df$dp)
+  # update map object
+  map <- addCircleMarkers(map, radius = 5,
+                          color= ~pal(dp),
+                          stroke = FALSE, fillOpacity = 0.5) %>%
+   addLegend(pal = pal,
+             values = ~dp,
+             opacity = 1,
+             title = "Dp (kPa)")
+ }
+ # return
+  return(map)
 }
 #_______________________________________________________________________________
 
