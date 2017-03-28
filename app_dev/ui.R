@@ -53,7 +53,10 @@ fluidPage(
     selectInput("select_id_op", label = "", 
     choices = "id_list", 
     selected = 1))),
-    fluidRow(plotlyOutput("plot_op", height = "700px"))
+    fluidRow(plotlyOutput("plot_op_flow", height = "200px")),
+    fluidRow(plotlyOutput("plot_op_vol", height = "200px")),
+    fluidRow(plotlyOutput("plot_op_batv", height = "200px")),
+    fluidRow(plotlyOutput("plot_op_batf", height = "200px"))
     ),
   tabPanel("pm",
     fluidRow(
