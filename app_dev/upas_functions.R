@@ -162,63 +162,90 @@ plot_met <- function(df){
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
-# Plot operation
-# plot_op(upas, "BLR02")
-plot_op <- function(df){
+# Plot operation flow
+# plot_op_flow(upas, "BLR02")
+plot_op_flow <- function(df){
  # plot flow
- p_flow <- ggplot(df, aes(x = datetime, y = flow, color = id)) +
-  geom_point() +
-  theme_minimal() +
-  xlab("") +
-  ylab("Flow (L/min)") +
-  ylim(floor(min(df$flow)),
-       ceiling(max(df$flow))) +
-  theme(legend.position = "hide") +
-  theme(text = element_text(size = 22)) +
-  scale_fill_brewer() +
-  theme(legend.title=element_blank())
- # plot sampled volume
- p_vol <- ggplot(df, aes(x = datetime, y = vol, color = id)) +
-  geom_point() +
-  theme_minimal() +
-  xlab("") +
-  ylab("Sample (L)") +
-  ylim(0, round_up(max(df$vol, na.rm = TRUE))) +
-  theme(legend.position = "hide") +
-  theme(text = element_text(size = 22)) +
-  scale_fill_brewer() +
-  theme(legend.title=element_blank())
- 
- # plot battery voltage
- p_batv <- ggplot(df, aes(x = datetime, y = bat_v, color = id)) +
-  geom_point() +
-  theme_minimal() +
-  xlab("") +
-  ylab("Bat (V)") +
-  ylim(round(min(df$bat_v, na.rm = TRUE) -50, -2),
-       round(max(df$bat_v, na.rm = TRUE) + 50, -2)) +
-  theme(legend.position = "hide") +
-  theme(text = element_text(size = 22)) +
-  scale_fill_brewer() +
-  theme(legend.title=element_blank())
- # plot battery fuel
- p_batf <- ggplot(df, aes(x = datetime, y = bat_fuel, color = id)) +
-  geom_point() +
-  theme_minimal() +
-  xlab("") +
-  ylab("Fuel (?)") +
-  ylim(round(min(df$bat_fuel, na.rm = TRUE) -50, -2),
-       round(max(df$bat_fuel, na.rm = TRUE) + 50, -2)) +
-  theme(legend.position = "hide") +
-  theme(text = element_text(size = 22)) +
-  scale_fill_brewer() +
-  theme(legend.title=element_blank())
- # combine
- p <- multiplot(p_flow, p_vol, p_batv, p_batf, cols = 1)
-
+  p_flow <- ggplot(df, aes(x = datetime, y = flow, color = id)) +
+            geom_point() +
+            theme_minimal() +
+            xlab("") +
+            ylab("Flow (L/min)") +
+            ylim(floor(min(df$flow)),
+                 ceiling(max(df$flow))) +
+            theme(legend.position = "hide") +
+            theme(text = element_text(size = 22)) +
+            scale_fill_brewer() +
+            theme(legend.title=element_blank())
  # return
- return(p)
+  return(p_flow)
 }
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# Plot operation volume
+# plot_op_flow(upas, "BLR02")
+plot_op_vol <- function(df){ 
+ # plot sampled volume
+  p_vol <- ggplot(df, aes(x = datetime, y = vol, color = id)) +
+           geom_point() +
+           theme_minimal() +
+           xlab("") +
+           ylab("Sample (L)") +
+           ylim(0, round_up(max(df$vol, na.rm = TRUE))) +
+           theme(legend.position = "hide") +
+           theme(text = element_text(size = 22)) +
+           scale_fill_brewer() +
+           theme(legend.title=element_blank())
+ # return
+  return(p_vol)
+}
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# Plot operation battery voltage
+plot_op_batv <- function(df){ 
+ # plot battery voltage
+  p_batv <- ggplot(df, aes(x = datetime, y = bat_v, color = id)) +
+            geom_point() +
+            theme_minimal() +
+            xlab("") +
+            ylab("Bat (V)") +
+            ylim(round(min(df$bat_v, na.rm = TRUE) -50, -2),
+                 round(max(df$bat_v, na.rm = TRUE) + 50, -2)) +
+            theme(legend.position = "hide") +
+            theme(text = element_text(size = 22)) +
+            scale_fill_brewer() +
+            theme(legend.title=element_blank())
+ # return
+  return(p_batv)
+}
+#_______________________________________________________________________________
+
+#_______________________________________________________________________________
+# Plot operation battery fuel
+plot_op_batf <- function(df){ 
+ # plot battery fuel
+  p_batf <- ggplot(df, aes(x = datetime, y = bat_fuel, color = id)) +
+            geom_point() +
+            theme_minimal() +
+            xlab("") +
+            ylab("Fuel (?)") +
+            ylim(round(min(df$bat_fuel, na.rm = TRUE) -50, -2),
+                 round(max(df$bat_fuel, na.rm = TRUE) + 50, -2)) +
+            theme(legend.position = "hide") +
+            theme(text = element_text(size = 22)) +
+            scale_fill_brewer() +
+            theme(legend.title=element_blank())
+ # return
+  return(p_batf)
+}
+#_______________________________________________________________________________
+ # combine
+ # p <- multiplot(p_flow, p_vol, p_batv, p_batf, cols = 1)
+ # return
+ # return(p)
+ #}
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
