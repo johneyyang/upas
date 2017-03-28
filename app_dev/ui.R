@@ -4,6 +4,7 @@
   library(tidyverse)
   library(leaflet)
   library(scales)
+  library(plotly)
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
@@ -43,7 +44,7 @@ fluidPage(
     selectInput("select_id_met", label = "", 
       choices = "id_list", 
       selected = 1))),
-    fluidRow(plotOutput("plot_met", height = "700px"))
+    fluidRow(plotlyOutput("plot_met", height = "700px"))
     ),
   tabPanel("op",
     fluidRow(
@@ -52,7 +53,7 @@ fluidPage(
     selectInput("select_id_op", label = "", 
     choices = "id_list", 
     selected = 1))),
-    fluidRow(plotOutput("plot_op", height = "700px"))
+    fluidRow(plotlyOutput("plot_op", height = "700px"))
     ),
   tabPanel("pm",
     fluidRow(
@@ -61,7 +62,7 @@ fluidPage(
     selectInput("select_id_pm", label = "", 
     choices = "id_list", 
     selected = 1))),
-    fluidRow(plotOutput("plot_pm", height = "700px"))
+    fluidRow(plotlyOutput("plot_pm", height = "700px"))
     )
     )
    )

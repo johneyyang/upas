@@ -4,6 +4,7 @@
   library(tidyverse)
   library(leaflet)
   library(scales)
+  library(plotly)
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
@@ -63,22 +64,26 @@ function(input, output){
 
 #_______________________________________________________________________________
 # plot met
-  output$plot_met <- renderPlot({
-  print(plot_met(met_data()))
+  output$plot_met <- renderPlotly({
+   p <- plot_met(met_data())
+   ggplotly(p)
   })
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
 # plot op
-  output$plot_op <- renderPlot({
-   print(plot_op(op_data()))
+  output$plot_op <- renderPlotly({
+   p <- plot_op(op_data())
+   print(class(p))
+   ggplotly(p)
   })
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
 # plot pm
-  output$plot_pm <- renderPlot({
-   print(plot_pm(pm_data()))
+  output$plot_pm <- renderPlotly({
+   p <- plot_pm(pm_data())
+   ggplotly(p)
   })
 #_______________________________________________________________________________
 

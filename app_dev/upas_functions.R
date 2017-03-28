@@ -3,6 +3,7 @@
 library(tidyverse)
 library(scales)
 library(viridis)
+library(plotly)
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
@@ -108,7 +109,6 @@ plot_pm <- function(df){
       theme(text = element_text(size = 22)) +
       scale_fill_brewer() +
       theme(legend.title=element_blank())
-      
  # return
  return(p)
 }
