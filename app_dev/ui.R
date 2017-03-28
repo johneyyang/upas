@@ -13,11 +13,14 @@ fluidPage(
   #_____________________________________________________________________________
   # top row
   fluidRow(
-    column(2, p(), "UPAS test app", p()
+    column(2, br(), "UPAS test app", p()
     ),
-    column(5,
+    column(3,
          offset = 0,
          fileInput("file1", "", multiple = TRUE, accept = ".txt", width = "100%")
+    ),
+    column(3, br(),
+         downloadButton("downloadData", "download data")
     )
   ),
   #_____________________________________________________________________________
@@ -34,7 +37,7 @@ fluidPage(
                 choices = c("id", "dp", "t", "rh"),
                 selected = 1))),
     fluidRow(
-      leafletOutput("upasmap", height = 900),
+      leafletOutput("upasmap", height = 800),
       p()
       )),
   tabPanel("met",
@@ -60,7 +63,7 @@ fluidPage(
     fluidRow(plotlyOutput("plot_op_batv", height = "250px"))
     #fluidRow(plotlyOutput("plot_op_batf", height = "200px"))
     ),
-  tabPanel("pm",
+  tabPanel("dp",
     fluidRow(
     column(1, p())
     #column(2, offset = 1,
