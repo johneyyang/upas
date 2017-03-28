@@ -125,7 +125,7 @@ plot_met <- function(df){
   xlab("") +
   ylab("Temp (oC)") +
   ylim(0, round_up(max(df$t_oc, na.rm = TRUE))) +
-  theme(legend.position = "hide") +
+  theme(legend.position = "none") +
   theme(text = element_text(size = 22)) +
   scale_fill_brewer() +
   theme(legend.title=element_blank())
@@ -136,7 +136,7 @@ plot_met <- function(df){
   xlab("") +
   ylab("RH (%)") +
   ylim(0, round_up(max(df$rh_pct, na.rm = TRUE))) +
-  theme(legend.position = "hide") +
+  theme(legend.position = "none") +
   theme(text = element_text(size = 22)) +
   scale_fill_brewer() +
   theme(legend.title=element_blank())
@@ -149,7 +149,7 @@ plot_met <- function(df){
   ylab("Atmos-P (kPa)") +
   ylim(round(min(df$p_kpa, na.rm = TRUE) -50, -2),
        round(max(df$p_kpa, na.rm = TRUE) + 50, -2)) +
-  theme(legend.position = "hide") +
+  theme(legend.position = "none") +
   theme(text = element_text(size = 22)) +
   scale_fill_brewer() +
   theme(legend.title=element_blank())
@@ -173,10 +173,10 @@ plot_op_flow <- function(df){
             ylab("Flow (L/min)") +
             ylim(floor(min(df$flow)),
                  ceiling(max(df$flow))) +
-            theme(legend.position = "hide") +
-            theme(text = element_text(size = 22)) +
+            theme(legend.position = "none") +
+            theme(text = element_text(size = 20)) +
             scale_fill_brewer() +
-            theme(legend.title=element_blank())
+            theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
  # return
   return(p_flow)
 }
@@ -193,10 +193,10 @@ plot_op_vol <- function(df){
            xlab("") +
            ylab("Sample (L)") +
            ylim(0, round_up(max(df$vol, na.rm = TRUE))) +
-           theme(legend.position = "hide") +
-           theme(text = element_text(size = 22)) +
+           theme(legend.position = "none") +
+           theme(text = element_text(size = 20)) +
            scale_fill_brewer() +
-           theme(legend.title=element_blank())
+           theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
  # return
   return(p_vol)
 }
@@ -213,10 +213,10 @@ plot_op_batv <- function(df){
             ylab("Bat (V)") +
             ylim(round(min(df$bat_v, na.rm = TRUE) -50, -2),
                  round(max(df$bat_v, na.rm = TRUE) + 50, -2)) +
-            theme(legend.position = "hide") +
-            theme(text = element_text(size = 22)) +
+            theme(legend.position = "none") +
+            theme(text = element_text(size = 20)) +
             scale_fill_brewer() +
-            theme(legend.title=element_blank())
+            theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
  # return
   return(p_batv)
 }
@@ -233,10 +233,10 @@ plot_op_batf <- function(df){
             ylab("Fuel (?)") +
             ylim(round(min(df$bat_fuel, na.rm = TRUE) -50, -2),
                  round(max(df$bat_fuel, na.rm = TRUE) + 50, -2)) +
-            theme(legend.position = "hide") +
-            theme(text = element_text(size = 22)) +
+            theme(legend.position = "none") +
+            theme(text = element_text(size = 20)) +
             scale_fill_brewer() +
-            theme(legend.title=element_blank())
+            theme(plot.margin = unit(c(1, 1, 1, 1), "cm"))
  # return
   return(p_batf)
 }
