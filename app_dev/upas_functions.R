@@ -4,7 +4,6 @@ library(tidyverse)
 library(scales)
 library(viridis)
 library(plotly)
-library(rsconnect)
 #_______________________________________________________________________________
 
 #_______________________________________________________________________________
@@ -405,7 +404,7 @@ data_pm <- function(df){
 
 plot_hist_dp <- function(df){
  # plot
- p <- ggplot(out, aes(x = dp, fill = id)) +
+ p <- ggplot(df, aes(x = dp, fill = id)) +
   geom_histogram(binwidth = 0.5) +
   theme_minimal() +
   xlab("dp (kPa)") +
