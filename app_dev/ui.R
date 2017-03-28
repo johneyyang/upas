@@ -39,20 +39,22 @@ fluidPage(
       )),
   tabPanel("met",
     fluidRow(
-    column(1),
-    column(2, offset = 1,
-    selectInput("select_id_met", label = "", 
-      choices = "id_list", 
-      selected = 1))),
+    column(1, p())
+    #column(2, offset = 1,
+    #selectInput("select_id_met", label = "", 
+    #  choices = "id_list", 
+    #  selected = 1))
+    ),
     fluidRow(plotOutput("plot_met", height = "700px"))
     ),
   tabPanel("op",
     fluidRow(
-    column(1),
-    column(2, offset = 1,
-    selectInput("select_id_op", label = "", 
-    choices = "id_list", 
-    selected = 1))),
+    column(1, p())
+    #column(2, offset = 1,
+    #selectInput("select_id_op", label = "", 
+    #choices = "id_list", 
+    #selected = 1))
+    ),
     fluidRow(plotlyOutput("plot_op_flow", height = "250px")),
     fluidRow(plotlyOutput("plot_op_vol", height = "250px")),
     fluidRow(plotlyOutput("plot_op_batv", height = "250px"))
@@ -60,11 +62,12 @@ fluidPage(
     ),
   tabPanel("pm",
     fluidRow(
-    column(1),
-    column(2, offset = 1,
-    selectInput("select_id_pm", label = "", 
-    choices = "id_list", 
-    selected = 1))),
+    column(1)
+    #column(2, offset = 1,
+    #selectInput("select_id_pm", label = "", 
+    #choices = "id_list", 
+    #selected = 1))
+    ),
     fluidRow(plotlyOutput("plot_pm", height = "700px"))
     )
     )
