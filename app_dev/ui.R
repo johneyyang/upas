@@ -27,13 +27,15 @@ fluidPage(
   fluidRow(column(10, offset = 1,
   tabsetPanel(type = "tabs", 
   tabPanel("map",
+    fluidRow(column(2, offset = 1,
     selectInput("map_color",
-                label = "",
+                label = "", 
                 choices = c("id", "dp", "t", "rh"),
-                selected = 1),
-    leafletOutput("upasmap", height = 900),
-    p()
-    ),
+                selected = 1))),
+    fluidRow(
+      leafletOutput("upasmap", height = 900),
+      p()
+      )),
   tabPanel("met",
     fluidRow(
     column(1),
