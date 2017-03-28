@@ -64,9 +64,9 @@ function(input, output){
 
 #_______________________________________________________________________________
 # plot met
-  output$plot_met <- renderPlotly({
+  output$plot_met <- renderPlot({
    p <- plot_met(met_data())
-   ggplotly(p)
+   p
   })
 #_______________________________________________________________________________
 
