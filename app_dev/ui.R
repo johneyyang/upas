@@ -19,8 +19,8 @@ fluidPage(
          offset = 0,
          fileInput("file1", "", multiple = TRUE, accept = ".txt", width = "100%")
     ),
-    column(3, br(),
-         downloadButton("downloadData", "download data")
+    column(4, br(),
+         downloadButton("downloadData", "export processed data")
     )
   ),
   #_____________________________________________________________________________
