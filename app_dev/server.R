@@ -45,7 +45,7 @@ function(input, output){
 # met data to plot
   met_data <- reactive({
    validate(
-    need(datasetInput() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
     data_met(datasetInput())
   })
@@ -55,7 +55,7 @@ function(input, output){
 # op data to plot
   op_data <- reactive({
    validate(
-    need(datasetInput() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
     data_op(datasetInput())
   })
@@ -65,7 +65,7 @@ function(input, output){
 # pm data to plot
   pm_data <- reactive({
    validate(
-    need(datasetInput() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    data_pm(datasetInput())
   })
@@ -74,6 +74,9 @@ function(input, output){
 #_______________________________________________________________________________
 # summary data to plot
   summary_data <- reactive({
+   validate(
+    need(input$file1 != "", "upload a dataset")
+   )
    datasetInput()
   })
 #_______________________________________________________________________________
@@ -82,7 +85,7 @@ function(input, output){
 # plot met
   output$plot_met <- renderPlot({
    validate(
-    need(met_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_met(met_data())
    p
@@ -93,7 +96,7 @@ function(input, output){
 # plot op flow
   output$plot_op_flow <- renderPlotly({
    validate(
-    need(op_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_op_flow(op_data())
    ggplotly(p)
@@ -104,7 +107,7 @@ function(input, output){
 # plot op vol
   output$plot_op_vol <- renderPlotly({
    validate(
-    need(op_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_op_vol(op_data())
    ggplotly(p)
@@ -115,7 +118,7 @@ function(input, output){
   # plot op batv
   output$plot_op_batv <- renderPlotly({
    validate(
-    need(op_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_op_batv(op_data())
    ggplotly(p)
@@ -126,7 +129,7 @@ function(input, output){
 # plot op batf
   output$plot_op_batf <- renderPlotly({
    validate(
-    need(op_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_op_batf(op_data())
    ggplotly(p)
@@ -137,7 +140,7 @@ function(input, output){
 # plot pm
   output$plot_pm <- renderPlotly({
    validate(
-    need(pm_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_pm(pm_data())
    ggplotly(p)
@@ -148,7 +151,7 @@ function(input, output){
 # plot dp hist
   output$plot_hist_dp <- renderPlotly({
    validate(
-    need(summary_data() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    p <- plot_hist_dp(summary_data())
    ggplotly(p)
@@ -159,7 +162,7 @@ function(input, output){
 # map
   output$upasmap <- renderLeaflet({
    validate(
-    need(datasetInput() != "null", "upload a dataset")
+    need(input$file1 != "", "upload a dataset")
    )
    upas_map(datasetInput(), input$map_color)
   })
@@ -167,9 +170,6 @@ function(input, output){
 
 #_______________________________________________________________________________
   output$downloadData <- downloadHandler(
-   validate(
-    need(datasetInput() != "null", "no data uploaded")
-   ),
    filename = function() { 
     paste("upas", '.csv', sep = '')
    },
